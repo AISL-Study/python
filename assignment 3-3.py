@@ -4,15 +4,15 @@ from collections import deque
 
 
 def bfs(graph, start, visited):
-    quene = deque([start])
+    queue = deque([start])
     visited[start] = True
 
-    while quene:
-        p = quene.popleft()
+    while queue:
+        p = queue.popleft()
         print(p, "", end = '')
         for i in graph[p]:
             if not (visited[i]):
-                quene.append(i)
+                queue.append(i)
                 visited[i] = True
 
 
