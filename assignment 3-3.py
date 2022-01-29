@@ -9,7 +9,7 @@ def bfs(graph, start, visited):
 
     while queue:
         p = queue.popleft()
-        print(p, "", end = '')
+        print(p, "", end = '')  
         for i in graph[p]:
             if not (visited[i]):
                 queue.append(i)
