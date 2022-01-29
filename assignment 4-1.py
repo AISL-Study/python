@@ -1,9 +1,18 @@
 # 서울시 버스 노선 정보 시스템 만들기
 
-
 # 추가한 모듈
 import pandas as pd
 import os
+
+# 전역 변수
+global TotalIndex
+TotalIndex = 39364
+
+global df, out, np
+df = pd.read_excel('C:\\내 파일\\대학 수업\\study\\6. Python_Study_4\\20190124기준_서울시_버스노선정보.xls', sheet_name='Sheet0', usecols= ["노선명", "정류소명"])
+out = list(df)
+np = pd.DataFrame.to_numpy(df)
+
 
 # 파일 경로 설정
 df = pd.read_excel('C:\\내 파일\\대학 수업\\study\\6. Python_Study_4\\20190124기준_서울시_버스노선정보.xls', sheet_name='Sheet0')
@@ -12,10 +21,10 @@ out = list(df.columns)
 
 # 제작한 오류
 class OutOfRangeError(Exception):
-    pass
+    pass # 입력한 값이 범위를 초과한 경우 출력
 
 
-
+# 시작 보드 출력
 def ServiceBoard():
         print("=" * 34)
         print("""\
@@ -26,6 +35,7 @@ def ServiceBoard():
         print("=" * 34)
 
 
+# 모드 선택 함수
 def SelectionBoard():
 
     Mode = int(input("정수값을 선택하시오: "))
@@ -40,16 +50,25 @@ def SelectionBoard():
 
     else:
         raise OutOfRangeError("Error: You've entered a number out of range.")
-        
+
+
+def GetBusNumber(InsertedStation):
+    for i in range( TotalIndex - 1 ):
+        if InsertedStation in np[i][1]:
+            print("["+np[i][1]+"]", "버스가", "[" + np[i][0] + "]", "정류장에 정차합니다.")
+
+
+def GetBusStation(InsertedBusNumber):
+    for i in range( TotalIndex - 1 ):
+        if np[i][0] == InsertedBusNumber:
+            print("["+InsertedBusNumber+"]", "버스가", "[" + np[i][1] + "]", "정류장에 정차합니다.")
 
 
 # 실행
 try:
 
-    # 파일 경로 설정
-    df = pd.read_excel('C:\\내 파일\\대학 수업\\study\\6. Python_Study_4\\20190124기준_서울시_버스노선정보.xls', sheet_name='Sheet0', usecols= ["노선명", "정류소명"])
-    out = list(df)
-    np = pd.DataFrame.to_numpy(df)
+    # 파일 경로 설정 (다른 컴퓨터에 사용할 경우 경로를 바꿀 것)
+    # pd.read_excel('경로명\파일명', sheet_name='', usecols= ["노선명", "정류소명"])
 
     while 1:
         ServiceBoard()
@@ -59,19 +78,20 @@ try:
 
         elif ConfirmNumber == 1:
             InsertedStation = input("정류장 이름을 입력하세요(일부 명칭도 가능): ")
-            for i in range(39364 - 1):
-                if np[i][1] in InsertedStation:
-                    print("["+InsertedStation+"]", "버스가", "[" + np[i][0] + "]", "정류장에 정차합니다.")
-                    raise NotImplementedError
+            GetBusNumber(InsertedStation)
 
         elif ConfirmNumber == 2:
             InsertedBusNumber = input("버스노선명을 입력하세요: ")
-            for i in range( 39364 - 1 ):
-                if np[i][0] == InsertedBusNumber:
-                    print("["+InsertedBusNumber+"]", "버스가", "[" + np[i][1] + "]", "정류장에 정차합니다.")
-
+            GetBusStation(InsertedBusNumber)
 
     print("프로그램이 정상적으로 종료되었습니다.")
 
+
+
 except OutOfRangeError as exception:
-    print("Error: You've entered a number out of range.")
+    print("type(exception):", type(exception))
+    print("Error: You've inserted a number out of range.")
+
+except ValueError as exception:
+    print("type(exception):", type(exception))
+    print("Error: You've not inserted integer.")

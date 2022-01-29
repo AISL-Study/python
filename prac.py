@@ -10,7 +10,5 @@ np = pd.DataFrame.to_numpy(df)
 bus = input("노선명: ")
 
 for i in range(39364 - 1):
-    for j in range(len(bus) - 1):
-        for k in range(j, len(bus) - 1):
-            if np[i][1] in bus[j:k]:
-                print("["+InsertedBusNumber+"]", "버스가", "[" + np[i][0] + "]", "정류장에 정차합니다.")
+    if bus in np[i][1]:
+        print("["+np[i][1]+"]", "버스가", "[" + np[i][0] + "]", "정류장에 정차합니다.")
