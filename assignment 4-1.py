@@ -66,7 +66,6 @@ def GetBusStation(InsertedBusNumber):
 
 # 실행
 try:
-
     while 1:
         ServiceBoard()
         ConfirmNumber = SelectionBoard()
