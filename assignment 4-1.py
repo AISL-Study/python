@@ -50,6 +50,7 @@ def SelectionBoard():
         raise OutOfRangeError("Error: You've inserted a number out of range.")
 
 
+# 버스 정류장 검색 함수
 def GetBusNumber(InsertedStation):
     for i in range( TotalIndex - 1 ):
         if InsertedStation in np[i][1]:
@@ -57,6 +58,7 @@ def GetBusNumber(InsertedStation):
             print(string_bus_station)
 
 
+# 버스 노선명 검색 함수
 def GetBusStation(InsertedBusNumber):
     for i in range( TotalIndex - 1 ):
         if np[i][0] == InsertedBusNumber:
