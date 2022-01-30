@@ -4,19 +4,17 @@
 import pandas as pd
 import os
 
-# 전역 변수
+# 전역 변수, 파일 경로 설정
 global TotalIndex
 TotalIndex = 39364
 
 global df, out, np
+
+# 파일 경로 설정 (다른 컴퓨터에 사용할 경우 경로를 바꿀 것)
+# pd.read_excel('경로명\파일명', sheet_name='', usecols= ["노선명", "정류소명"])
 df = pd.read_excel('C:\\내 파일\\대학 수업\\study\\6. Python_Study_4\\20190124기준_서울시_버스노선정보.xls', sheet_name='Sheet0', usecols= ["노선명", "정류소명"])
 out = list(df)
 np = pd.DataFrame.to_numpy(df)
-
-
-# 파일 경로 설정
-df = pd.read_excel('C:\\내 파일\\대학 수업\\study\\6. Python_Study_4\\20190124기준_서울시_버스노선정보.xls', sheet_name='Sheet0')
-out = list(df.columns)
 
 
 # 제작한 오류
@@ -49,26 +47,25 @@ def SelectionBoard():
         return -1
 
     else:
-        raise OutOfRangeError("Error: You've entered a number out of range.")
+        raise OutOfRangeError("Error: You've inserted a number out of range.")
 
 
 def GetBusNumber(InsertedStation):
     for i in range( TotalIndex - 1 ):
         if InsertedStation in np[i][1]:
-            print("["+np[i][1]+"]", "버스가", "[" + np[i][0] + "]", "정류장에 정차합니다.")
+            string_bus_station = "[{}] 정류소에 [{}] 버스가 정차합니다.".format(np[i][1], np[i][0])
+            print(string_bus_station)
 
 
 def GetBusStation(InsertedBusNumber):
     for i in range( TotalIndex - 1 ):
         if np[i][0] == InsertedBusNumber:
-            print("["+InsertedBusNumber+"]", "버스가", "[" + np[i][1] + "]", "정류장에 정차합니다.")
+            string_bus_number = "[{}] 버스가 [{}] 정류장에 정차합니다.".format(np[i][0], np[i][1])
+            print(string_bus_number)
 
 
 # 실행
 try:
-
-    # 파일 경로 설정 (다른 컴퓨터에 사용할 경우 경로를 바꿀 것)
-    # pd.read_excel('경로명\파일명', sheet_name='', usecols= ["노선명", "정류소명"])
 
     while 1:
         ServiceBoard()
